@@ -1,5 +1,6 @@
 $(document).ready(function(){
-    $("form").submit();
+    $("button#add").click(addWord);
+    $("button#generate").click(generateHaiku);
 });
 
 let syllables = [
@@ -14,26 +15,37 @@ let syllables = [
 ];
 
 
-function addWord(event){
-    event.preventDefault();
+function addWord() {
+
 
     let wordEntered = $("input#word").val();
 
     let numDash = 0;
-    for(let i = 0; i<wordEntered.length; i++){
+    for (let i = 0; i < wordEntered.length; i++) {
         let char = wordEntered[1];
-        if(char === "-"){
+        if (char === "-") {
             numDash++
-        }else if(numDash > 7){
+        } else if (numDash > 7) {
             $("p#errorMessage").text(`Sorry, that word has too many syllables for a haiku`);
         }
     }
+}
 
     function generateHaiku(){
+
         let randRow = Math.floor(Math.random()*7)+1;
 
-        let rowPicked = numSyllables[randomRow];
+        let rowPicked = syllables[randRow];
+
+        let randCol = Math.floor(Math.random() * rowPicked.length);
+
+        let wordChosen = syllables[randRow][randCol];
+
+        let newRandNum = Math.floor(Math.random()*7)+1;
+        while(rowPicked<7){
+            newRandNum += rowPicked;
+            $("p#output").text(wordChosen + " ");
+        }
 
     }
 
-}

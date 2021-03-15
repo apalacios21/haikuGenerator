@@ -17,35 +17,65 @@ let syllables = [
 
 function addWord() {
 
-
     let wordEntered = $("input#word").val();
+    let word = "";
 
-    let numDash = 0;
+    let numDash = 1;
     for (let i = 0; i < wordEntered.length; i++) {
-        let char = wordEntered[1];
+        let char = wordEntered[i];
         if (char === "-") {
             numDash++
-        } else if (numDash > 7) {
+        } else{
+            word += char;
+        } if (numDash > 7) {
             $("p#errorMessage").text(`Sorry, that word has too many syllables for a haiku`);
         }
     }
+    syllables[numDash][syllables[numDash].length] = word;
 }
 
-    function generateHaiku(){
+    function syll5() {
+    let line = "";
+    let totalSylls = 0;
+    while(totalSylls < 5){
+        let rand = Math.floor(Math.random()*5)+1;
+        if(rand + totalSylls > 5){
 
-        let randRow = Math.floor(Math.random()*7)+1;
-
-        let rowPicked = syllables[randRow];
-
-        let randCol = Math.floor(Math.random() * rowPicked.length);
-
-        let wordChosen = syllables[randRow][randCol];
-
-        let newRandNum = Math.floor(Math.random()*7)+1;
-        while(rowPicked<7){
-            newRandNum += rowPicked;
-            $("p#output").text(wordChosen + " ");
+        }else{
+            totalSylls += rand;
+            let innerArrayLength = syllables[rand].length - 1;
+            let randInner = Math.floor(Math.random()*innerArrayLength)+1;
+            line += syllables[rand][randInner] + " ";
         }
-
     }
+    return line;
+}
+function syll7(){
+    let line = "";
+    let totalSyll = 0;
+    while(totalSyll < 7){
+        let rand = Math.floor(Math.random()*7)+1;
+        if(rand + totalSyll > 7){
+
+        }else{
+            totalSyll += rand;
+            let innerArrayLength = syllables[rand].length - 1;
+            let randInner = Math.floor(Math.random()*innerArrayLength)+1;
+            line += syllables[rand][randInner] + " ";
+        }
+    }
+    return line;
+}
+
+function generateHaiku(){
+    let line1 = syll5();
+    let line2 = syll7();
+    let line3 = syll5();
+
+    $("p#output1").text(line1);
+    $("p#output2").text(line2);
+    $("p#output3").text(line3);
+}
+
+
 
